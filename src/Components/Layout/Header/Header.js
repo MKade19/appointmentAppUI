@@ -1,9 +1,11 @@
-import Navigationbar from "../../UI/Navigationbar/Navigationbar"
+import NavigationBar from "../../UI/NavigationBar/NavigationBar"
 
 const Header = () => {
     return (
-        <header>
-            <Navigationbar/>
+        <header className="mb-3">
+            <div>
+                 <NavigationBar/>
+            </div>
         </header>
     )
 }

@@ -8,6 +8,8 @@ import AuthContext from './Components/Context/AuthContext';
 import ChangePasswordPage from './Components/Pages/ChangePasswordPage/ChangePasswordPage';
 import { useContext } from 'react';
 import NotFoundPage from './Components/Pages/ErrorPages/NotFoundPage';
+import DepartmentsPage from './Components/Pages/DepartmentsPage/DepartmentsPage';
+import EditDepartmentPage from './Components/Pages/EditDepartmentPage/EditDepartmentPage';
 
 const App = () => {
     const { user } = useContext(AuthContext);
@@ -17,6 +19,10 @@ const App = () => {
             <Routes>
                 <Route path="/" element={ user ? <Layout/> : <Navigate to={'/auth/sign-in'}/> }>
                     <Route index element={ <HomePage/> }/>
+                    <Route path='departments'>
+                        <Route index element={ <DepartmentsPage/> }/>
+                        <Route path='edit' element={ <EditDepartmentPage/> }/>
+                    </Route>
                     <Route path='*' element={ <NotFoundPage/> }/>
                 </Route>
                 <Route path='/auth' element={ !user ? null : <Navigate to={'/'}/> }>
