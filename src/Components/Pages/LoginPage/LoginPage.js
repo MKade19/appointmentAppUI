@@ -6,8 +6,8 @@ const LoginPage = () => {
         <div>
             <h1 className="my-4">Sign in</h1>
             <LoginForm/>
-            <LinkContainer to={'/sign-up'}>
-                <button className="btn btn-link">Sign up</button>
+            <LinkContainer to={'/auth/change-password'}>
+                <button className="btn btn-link">Change password</button>
             </LinkContainer>
         </div>
     )
