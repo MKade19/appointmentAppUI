@@ -35,14 +35,14 @@ const RegisterForm = () => {
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label className="my-3" htmlFor="emailInput">Email</label>
-                        <input className="form-control" type="email" name="emailInput" value={email} onChange={changeEmail} placeholder="Enter email"/>
+                        <input className="form-control" type="email" id="emailInput" value={email} onChange={changeEmail} placeholder="Enter email"/>
                         <label className="my-3" htmlFor="passwordInput">Password</label>
-                        <input className="form-control" type="password" name="passwordInput" value={password} onChange={changePassword} placeholder="Password"/>
+                        <input className="form-control" type="password" id="passwordInput" value={password} onChange={changePassword} placeholder="Password"/>
                         <label className="my-3" htmlFor="confirmPasswordInput">Confirm password</label>
                         <input 
                             className="form-control" 
                             type="password" 
-                            name="confirmPasswordInput" 
+                            id="confirmPasswordInput" 
                             value={confirmPassword} 
                             onChange={changeConfirmPassword} 
                             placeholder="Confirm password"

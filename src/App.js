@@ -1,24 +1,31 @@
 import './App.css';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import HomePage from './Components/Pages/HomePage/HomePage';
 import LoginPage from './Components/Pages/LoginPage/LoginPage';
+import Layout from './Components/Layout/Layout/Layout';
 import RegisterPage from './Components/Pages/RegisterPage/RegisterPage';
-import { AuthProvider } from './Components/Context/AuthContext';
-import Navigationbar from './Components/UI/Navigationbar/Navigationbar';
-import Footer from './Components/Layout/Footer/Footer';
+import AuthContext from './Components/Context/AuthContext';
+import ChangePasswordPage from './Components/Pages/ChangePasswordPage/ChangePasswordPage';
+import { useContext } from 'react';
+import NotFoundPage from './Components/Pages/ErrorPages/NotFoundPage';
 
 const App = () => {
+    const { user } = useContext(AuthContext);
+
     return (
         <div className="App">
-            <AuthProvider>
-                <Navigationbar/>
-                <Routes>
-                    <Route path="/" element={ <HomePage/> }/>
-                    <Route path="/sign-in" element={ <LoginPage/> }/>
-                    <Route path="/sign-up" element={ <RegisterPage/> }/>
-                </Routes>
-            </AuthProvider>
-            <Footer/>
+            <Routes>
+                <Route path="/" element={ user ? <Layout/> : <Navigate to={'/auth/sign-in'}/> }>
+                    <Route index element={ <HomePage/> }/>
+                    <Route path='*' element={ <NotFoundPage/> }/>
+                </Route>
+                <Route path='/auth' element={ !user ? null : <Navigate to={'/'}/> }>
+                    <Route path="sign-in" element={ <LoginPage/> }/>
+                    <Route path="register" element={ <RegisterPage/> }/>
+                    <Route path="change-password" element={ <ChangePasswordPage/> }/>
+                    <Route index element={ <Navigate to={'/auth/sign-in'}/> }/>
+                </Route>
+            </Routes>
         </div>
     );
 }
