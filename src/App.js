@@ -9,6 +9,7 @@ import ChangePasswordPage from './Components/Pages/ChangePasswordPage';
 import { useContext } from 'react';
 import NotFoundPage from './Components/Pages/ErrorPages/NotFoundPage';
 import DepartmentsPage from './Components/Pages/DepartmentsPage';
+import EmployeesPage from './Components/Pages/EmployeesPage';
 
 const App = () => {
     const { user } = useContext(AuthContext);
@@ -19,6 +20,7 @@ const App = () => {
                 <Route path="/" element={ user ? <Layout/> : <Navigate to={'/auth/sign-in'}/> }>
                     <Route index element={ <HomePage/> }/>
                     <Route path='departments' element={ <DepartmentsPage/> }/>
+                    <Route path='employees' element={ <EmployeesPage/> }/>
                     <Route path='*' element={ <NotFoundPage/> }/>
                 </Route>
                 <Route path='/auth' element={ !user ? null : <Navigate to={'/'}/> }>

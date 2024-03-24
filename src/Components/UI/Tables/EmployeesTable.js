@@ -1,11 +1,11 @@
 import Table from 'react-bootstrap/Table';
-import DepartmentDataService from '../../../Services/DepartmentDataService';
+import EmployeeDataService from '../../../Services/EmployeeDataService';
 import Swal from "sweetalert2";
 
-const DepartmentsTable = ({ handleOpenForm, departments, fetchData }) => {
+const EmployeesTable = ({ handleOpenForm, employees, fetchData }) => {
     const deleteHandler = async (id, event) => {
         Swal.fire({
-            title: 'Do you want to delete this department?',
+            title: 'Do you want to delete this employee?',
             showDenyButton: true,
             confirmButtonText: 'Yes',
             denyButtonText: 'No',
@@ -19,7 +19,7 @@ const DepartmentsTable = ({ handleOpenForm, departments, fetchData }) => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 Swal.fire({
-                    title: "Deparetment was deleted!",
+                    title: "Employee was deleted!",
                     icon: "success",
                     toast: true,
                     timer: 1000,
@@ -27,7 +27,7 @@ const DepartmentsTable = ({ handleOpenForm, departments, fetchData }) => {
                     timerProgressBar: true,
                     showConfirmButton: false,
                 });
-                await DepartmentDataService.deleteById(id);
+                await EmployeeDataService.deleteById(id);
                 await fetchData();
             } else if (result.isDenied) {
                 return;
@@ -36,21 +36,24 @@ const DepartmentsTable = ({ handleOpenForm, departments, fetchData }) => {
     }
 
     const addRows = () => {
-        return departments.map(d => createRow(d));
+        return employees.map(d => createRow(d));
     }
  
-    const createRow = department => {
+    const createRow = employee => {
         return (
-            <tr key={department.id}>
-                <td>{department.name}</td>
-                <td>{department.address}</td>
+            <tr key={employee.id}>
+                <td>{employee.fullname}</td>
+                <td>{employee.email}</td>
+                <td>{employee.fullname}</td>
+                <td>{employee.address}</td>
+                <td>{employee.department.name}</td>
                 <td>
-                    <button className='btn btn-outline-primary' onClick={ event => { handleOpenForm(department.id, event) } }>
+                    <button className='btn btn-outline-primary' onClick={ event => { handleOpenForm(employee.id, event) } }>
                         <i className="bi bi-pen"></i>
                     </button>
                 </td>
                 <td>
-                    <button className='btn btn-outline-danger' onClick={ event => { deleteHandler(department.id, event) } }>
+                    <button className='btn btn-outline-danger' onClick={ event => { deleteHandler(employee.id, event) } }>
                         <i className="bi bi-trash"></i>
                     </button>
                 </td>
@@ -63,8 +66,11 @@ const DepartmentsTable = ({ handleOpenForm, departments, fetchData }) => {
             <Table hover striped bordered>
                 <thead>
                     <tr>
-                        <th>Name</th>
+                        <th>Fullname</th>
+                        <th>Email</th>
+                        <th>Phone</th>
                         <th>Address</th>
+                        <th>Department</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
@@ -77,4 +83,4 @@ const DepartmentsTable = ({ handleOpenForm, departments, fetchData }) => {
     )
 }
 
-export default DepartmentsTable;
+export default EmployeesTable;

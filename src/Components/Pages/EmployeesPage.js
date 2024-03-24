@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
-import DepartmentsTable from "../UI/Tables/DepartmentTable";
-import DepartmentDataService from "../../Services/DepartmentDataService";
-import EditDepartmentModal from "../UI/Modals/EditDepartmentModal";
+import EmployeesTable from "../UI/Tables/EmployeesTable";
+import EmployeeDataService from "../../Services/EmployeeDataService";
+import EditEmployeeModal from "../UI/Modals/EditEmployeeModal";
 
-const DepartmentsPage = () => {
+const EmployeesPage = () => {
     const [editFormOpened, setEditFormOpened] = useState(false);
-    const [departmentId, setDepartmentId] = useState(null);
-    const [departments, setDepartments] = useState([]);
+    const [employeeId, setEmployeeId] = useState(null);
+    const [employees, setEmployees] = useState([]);
 
     const handleOpenForm = (id, event) => {
-        setDepartmentId(id);
+        setEmployeeId(id);
         setEditFormOpened(true);
     }
 
@@ -18,8 +18,8 @@ const DepartmentsPage = () => {
     }
 
     const fetchData = async () => {
-        const departmentsData = await DepartmentDataService.getAll()
-        setDepartments(departmentsData.data);
+        const employeesData = await EmployeeDataService.getAll();
+        setEmployees(employeesData.data);
     }
 
     useEffect(() => {
@@ -28,19 +28,19 @@ const DepartmentsPage = () => {
     
     return (
         <div>
-            <h1 className="mb-4">Departments</h1>
+            <h1 className="mb-4">Employees</h1>
             <div>
                 <button onClick={ event => { handleOpenForm(null, event) } } className="btn btn-outline-primary">
                     <div className="bi bi-plus-circle"> Create new</div>
                 </button>
             </div>
-            <DepartmentsTable 
-                departments={ departments } 
+            <EmployeesTable 
+                employees={ employees } 
                 handleOpenForm={ handleOpenForm } 
                 fetchData={ fetchData }
             />
-            <EditDepartmentModal 
-                departmentId={ departmentId } 
+            <EditEmployeeModal 
+                employeeId={ employeeId } 
                 showModal={ editFormOpened } 
                 handleClose={ handleCloseForm }
                 fetchData={ fetchData }
@@ -49,4 +49,4 @@ const DepartmentsPage = () => {
     )
 }
 
-export default DepartmentsPage;
+export default EmployeesPage;
