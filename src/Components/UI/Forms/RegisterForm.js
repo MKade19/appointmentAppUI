@@ -1,10 +1,10 @@
 import { useContext, useState } from "react"
-import AuthContext from "../../../Context/AuthContext";
+import AuthContext from "../../Context/AuthContext";
 
 const RegisterForm = () => {
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
-    const [confirmPassword, setConfirmPassword] = useState();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
     const { registerUser } = useContext(AuthContext);
 

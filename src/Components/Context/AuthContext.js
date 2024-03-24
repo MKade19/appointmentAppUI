@@ -58,7 +58,7 @@ export const AuthProvider = ({ children }) => {
                 position: 'top-right',
                 timerProgressBar: true,
                 showConfirmButton: false,
-            })
+            });
 
         } else {    
             console.log(response.status);
@@ -71,7 +71,7 @@ export const AuthProvider = ({ children }) => {
                 position: 'top-right',
                 timerProgressBar: true,
                 showConfirmButton: false,
-            })
+            });
         }
     }
 

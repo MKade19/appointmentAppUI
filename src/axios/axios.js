@@ -47,7 +47,7 @@ instance.interceptors.response.use(response => {
 
             //return instance.request(originalRequest);
         } catch (e) {
-            console.log('You are not authorized!')
+            console.log('You are not authorized!');
         }
     }
 
