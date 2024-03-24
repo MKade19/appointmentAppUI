@@ -1,5 +1,5 @@
 import { LinkContainer } from "react-router-bootstrap";
-import ChangePasswordForm from "../../UI/Forms/ChangePasswordForm/ChangePasswordForm";
+import ChangePasswordForm from "../UI/Forms/ChangePasswordForm";
 
 const ChangePasswordPage = () => {
     return (

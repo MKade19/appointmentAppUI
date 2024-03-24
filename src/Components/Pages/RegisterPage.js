@@ -1,4 +1,4 @@
-import RegisterForm from "../../UI/Forms/RegisterForm/RegisterForm";
+import RegisterForm from "../UI/Forms/RegisterForm";
 import { LinkContainer } from "react-router-bootstrap";
 
 const RegisterPage = () => {

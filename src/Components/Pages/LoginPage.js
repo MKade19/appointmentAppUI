@@ -1,4 +1,4 @@
-import LoginForm from "../../UI/Forms/LoginForm/LoginForm"
+import LoginForm from "../UI/Forms/LoginForm"
 import { LinkContainer } from "react-router-bootstrap";
 
 const LoginPage = () => {
