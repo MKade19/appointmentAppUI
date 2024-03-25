@@ -4,7 +4,7 @@ import EditAppointmentModal from "../UI/Modals/EditAppointmentModal";
 import AppointmentsTable from "../UI/Tables/AppointmentsTable";
 
 const HomePage = () => {
-    const [editFormOpened, setEditFormOpened] = useState(false);
+const [editFormOpened, setEditFormOpened] = useState(false);
     const [appointmentId, setAppointmentId] = useState(null);
     const [appointments, setAppointments] = useState([]);
 
@@ -24,6 +24,7 @@ const HomePage = () => {
 
     useEffect(() => {
         fetchData().catch(console.error);
+        document.title = 'Home - Appointments';
     }, []);
 
     return (

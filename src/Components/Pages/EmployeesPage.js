@@ -24,6 +24,7 @@ const EmployeesPage = () => {
 
     useEffect(() => {
         fetchData().catch(console.error);
+        document.title = 'Employees - Appointments';
     }, []);
     
     return (
