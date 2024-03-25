@@ -94,7 +94,6 @@ const EditEmployeeForm = ({ employeeId, handleClose, fetchData }) => {
                 });
             }
             else {
-                console.log(activeDepartment);
                 response = await EmployeeDataService.createOne(new Employee(-1, fullname, email, phone, address, activeDepartment, password));
                 Swal.fire({
                     title: "Employee was created!",

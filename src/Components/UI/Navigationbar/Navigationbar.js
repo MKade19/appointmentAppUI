@@ -13,12 +13,12 @@ const NavigationBar = () => {
     return (
         <Navbar bg="light" expand="lg" data-bs-theme="light">
             <Container>
-                <LinkContainer to={'/'}>
-                    <Navbar.Brand>{!user ? '' : user.fullname + ' – ' }</Navbar.Brand>
-                </LinkContainer>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse>
                     <Nav className="me-auto">
+                        <LinkContainer to={"/"}>
+                            <NavLink>Home</NavLink>
+                        </LinkContainer>
                         <LinkContainer to={"/customers"}>
                             <NavLink>Customers</NavLink>
                         </LinkContainer>
@@ -28,10 +28,8 @@ const NavigationBar = () => {
                         <LinkContainer to={"/employees"}>
                             <NavLink>Employees</NavLink>
                         </LinkContainer>
-                        <LinkContainer to={"/appointments"}>
-                            <NavLink>Appointments</NavLink>
-                        </LinkContainer>
                     </Nav>
+                    <Navbar.Brand className='mr-5'>{!user() ? '' : user().fullname + ' – ' }</Navbar.Brand>
                     { !user ? null : <NavLink onClick={handleLogout}>Log out</NavLink> }
                 </Navbar.Collapse>
             </Container>

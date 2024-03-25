@@ -2,51 +2,28 @@ import { createContext, useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import AuthDataService from "../../Services/AuthDataService";
 
 const AuthContext = createContext();
 
 export default AuthContext;
 
 export const AuthProvider = ({ children }) => {
-    const [authTokens, setAuthTokens] = useState(() =>
-        localStorage.getItem("authTokens")
-            ? JSON.parse(localStorage.getItem("authTokens"))
-            : null
-    );
-    
-
-    const [user, setUser] = useState(() => 
-        localStorage.getItem("user")
-            ? JSON.parse(localStorage.getItem("user"))
-            : null
-    );
-
-    const [loading, setLoading] = useState(true);
+    const authTokens = () => localStorage.getItem("authTokens") ? JSON.parse(localStorage.getItem("authTokens")) : null;
+    const user = () => localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
 
     const navigate = useNavigate();
 
     const loginUser = async (email, password) => {
-        const response = await fetch('http://127.0.0.1:8000/appointment-app/api/auth/token/', {
-            method: "POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body: JSON.stringify({
-                email, password
-            })
-        })
-        const data = await response.json()
-        console.log(data);
+        const response = await AuthDataService.login(email, password);
+        const data = response.data;
 
         if(response.status === 200){
-            console.log("Logged In");
             const tokens = {
                 access: data.access, 
                 refresh: data.refresh
             }
 
-            setAuthTokens(tokens)
-            setUser(data.user)
             localStorage.setItem("authTokens", JSON.stringify(tokens))
             localStorage.setItem("user", JSON.stringify(data.user))
             navigate("/")
@@ -61,8 +38,6 @@ export const AuthProvider = ({ children }) => {
             });
 
         } else {    
-            console.log(response.status);
-            console.log("there was a server issue");
             Swal.fire({
                 title: "Email does not exist or Incorrect Password. Please contact to administrator",
                 icon: "error",
@@ -75,49 +50,7 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
-    const registerUser = async (email, password, confirmPassword) => {
-        const response = await fetch("http://127.0.0.1:8000/appointment-app/api/auth/register/", {
-            method: "POST",
-            headers: {
-                "Content-Type":"application/json"
-            },
-            body: JSON.stringify({
-                email, password, confirmPassword
-            })
-        })
-
-        const data = await response.json()
-        console.log(data);
-
-        if(response.status === 201){
-            navigate("/auth/sign-in");
-            Swal.fire({
-                title: "Registration Successful, Login Now",
-                icon: "success",
-                toast: true,
-                timer: 3000,
-                position: 'top-right',
-                timerProgressBar: true,
-                showConfirmButton: false,
-            })
-        } else {
-            console.log(response.status);
-            console.log("there was a server issue");
-            Swal.fire({
-                title: "An Error Occured " + response.status,
-                icon: "error",
-                toast: true,
-                timer: 3000,
-                position: 'top-right',
-                timerProgressBar: true,
-                showConfirmButton: false,
-            })
-        }
-    }
-
     const logoutUser = () => {
-        setAuthTokens(null);
-        setUser(null);
         localStorage.removeItem("authTokens");
         localStorage.removeItem("user");
         navigate("/auth/sign-in");
@@ -133,15 +66,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     const changePassword = async (email, oldPassword, newPassword, confirmPassword) => {
-        const response = await fetch("http://127.0.0.1:8000/appointment-app/api/auth/change-password/", {
-            method: "POST",
-            headers: {
-                "Content-Type":"application/json"
-            },
-            body: JSON.stringify({
-                email, oldPassword, newPassword, confirmPassword
-            })
-        })
+        const response = await AuthDataService.changePassword(email, oldPassword, newPassword, confirmPassword);
 
         if(response.status === 200){
             Swal.fire({
@@ -156,10 +81,8 @@ export const AuthProvider = ({ children }) => {
 
             navigate("/auth/sign-in");
         } else {
-            console.log(response.status);
-            console.log("there was a server issue");
             Swal.fire({
-                title: "An Error Occured " + response.status,
+                title: "Error occured. Please verify given data.",
                 icon: "error",
                 toast: true,
                 timer: 3000,
@@ -172,25 +95,15 @@ export const AuthProvider = ({ children }) => {
 
     const contextData = {
         user, 
-        setUser,
         authTokens,
-        setAuthTokens,
-        registerUser,
         changePassword,
         loginUser,
         logoutUser,
     }
 
-    useEffect(() => {
-        if (authTokens) {
-            setUser(jwtDecode(authTokens.access));
-        }
-        setLoading(false)
-    }, [authTokens, loading])
-
     return (
-        <AuthContext.Provider value={contextData}>
-            {loading ? null : children}
+        <AuthContext.Provider value={ contextData }>
+            { children }
         </AuthContext.Provider>
     )
 }

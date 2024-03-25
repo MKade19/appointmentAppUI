@@ -8,11 +8,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import { AuthProvider } from './Components/Context/AuthContext';
+import InjectAxiosInterceptors from './axios/InjectAxiosInterceptors';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
         <BrowserRouter>
+            <InjectAxiosInterceptors/>
             <AuthProvider>
                 <App />
             </AuthProvider>

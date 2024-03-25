@@ -17,14 +17,14 @@ const App = () => {
     return (
         <div className="App">
             <Routes>
-                <Route path="/" element={ user ? <Layout/> : <Navigate to={'/auth/sign-in'}/> }>
+                <Route path="/" element={ user() ? <Layout/> : <Navigate to={'/auth/sign-in'}/> }>
                     <Route index element={ <HomePage/> }/>
                     <Route path='departments' element={ <DepartmentsPage/> }/>
                     <Route path='employees' element={ <EmployeesPage/> }/>
                     <Route path='customers' element={ <CustomersPage/> }/>
                     <Route path='*' element={ <NotFoundPage/> }/>
                 </Route>
-                <Route path='/auth' element={ !user ? null : <Navigate to={'/'}/> }>
+                <Route path='/auth' element={ !user() ? null : <Navigate to={'/'}/> }>
                     <Route path="sign-in" element={ <LoginPage/> }/>
                     <Route path="change-password" element={ <ChangePasswordPage/> }/>
                     <Route index element={ <Navigate to={'/auth/sign-in'}/> }/>

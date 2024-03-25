@@ -1,12 +1,11 @@
 import Table from 'react-bootstrap/Table';
-import DepartmentDataService from '../../../Services/DepartmentDataService';
+import AppointmentDataService from '../../../Services/AppointmentDataService';
 import Swal from "sweetalert2";
 
-const DepartmentsTable = ({ handleOpenForm, departments, fetchData }) => {
+const AppointmentsTable = ({ handleOpenForm, appointments, fetchData }) => {
     const deleteHandler = async (id, event) => {
         Swal.fire({
-            title: "Please confirm",
-            text: 'Are you sure, to delete the department? All employees in the department and appointments the employees involve will be deleted as well',
+            title: 'Do you want to delete this employee?',
             showDenyButton: true,
             confirmButtonText: 'Yes',
             denyButtonText: 'No',
@@ -20,15 +19,15 @@ const DepartmentsTable = ({ handleOpenForm, departments, fetchData }) => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 Swal.fire({
-                    title: "Department has been deleted",
+                    title: "Appointment was deleted!",
                     icon: "success",
                     toast: true,
-                    timer: 3000,
+                    timer: 1000,
                     position: 'top-right',
                     timerProgressBar: true,
                     showConfirmButton: false,
                 });
-                await DepartmentDataService.deleteById(id);
+                await AppointmentDataService.deleteById(id);
                 await fetchData();
             } else if (result.isDenied) {
                 return;
@@ -37,21 +36,24 @@ const DepartmentsTable = ({ handleOpenForm, departments, fetchData }) => {
     }
 
     const addRows = () => {
-        return departments.map(d => createRow(d));
+        return appointments.map(a => createRow(a));
     }
  
-    const createRow = department => {
+    const createRow = appointment => {
         return (
-            <tr key={department.id}>
-                <td>{department.name}</td>
-                <td>{department.address}</td>
+            <tr key={appointment.id}>
+                <td>{new Date(appointment.date).toLocaleDateString()}</td>
+                <td>{appointment.start}</td>
+                <td>{appointment.end}</td>
+                <td>{appointment.employee.fullname}</td>
+                <td>{appointment.customer.fullname}</td>
                 <td>
-                    <button className='btn btn-outline-primary' onClick={ event => { handleOpenForm(department.id, event) } }>
+                    <button className='btn btn-outline-primary' onClick={ event => { handleOpenForm(appointment.id, event) } }>
                         <i className="bi bi-pen"></i>
                     </button>
                 </td>
                 <td>
-                    <button className='btn btn-outline-danger' onClick={ event => { deleteHandler(department.id, event) } }>
+                    <button className='btn btn-outline-danger' onClick={ event => { deleteHandler(appointment.id, event) } }>
                         <i className="bi bi-trash"></i>
                     </button>
                 </td>
@@ -64,8 +66,11 @@ const DepartmentsTable = ({ handleOpenForm, departments, fetchData }) => {
             <Table hover striped bordered>
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Address</th>
+                        <th>Date</th>
+                        <th>Start</th>
+                        <th>End</th>
+                        <th>Employee</th>
+                        <th>Customer</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
@@ -78,4 +83,4 @@ const DepartmentsTable = ({ handleOpenForm, departments, fetchData }) => {
     )
 }
 
-export default DepartmentsTable;
+export default AppointmentsTable;
