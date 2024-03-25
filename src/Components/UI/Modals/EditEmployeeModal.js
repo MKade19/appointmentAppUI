@@ -10,7 +10,7 @@ const EditEmployeeModal = ({ employeeId, showModal, handleClose, fetchData }) =>
                 keyboard={false}
                 centered>
                 <Modal.Header>
-                    <Modal.Title>{employeeId ? 'Edit' : 'Create'} department</Modal.Title>
+                    <Modal.Title>{employeeId ? 'Edit' : 'Create'} employee</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <EditEmployeeForm employeeId={employeeId} handleClose={handleClose} fetchData={ fetchData }/>

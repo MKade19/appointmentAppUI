@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import EmployeeDataService from "../../../Services/EmployeeDataService";
 import Employee from "../../../Models/Employee"
-import Department from "../../../Models/Department";
 import DepartmentDataService from "../../../Services/DepartmentDataService";
 
 const EditEmployeeForm = ({ employeeId, handleClose, fetchData }) => {
@@ -12,6 +11,8 @@ const EditEmployeeForm = ({ employeeId, handleClose, fetchData }) => {
     const [address, setAddress] = useState('');
     const [activeDepartment, setActiveDepartment] = useState({});
     const [departments, setDepartments] = useState([]);
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,7 +30,7 @@ const EditEmployeeForm = ({ employeeId, handleClose, fetchData }) => {
         } 
 
         fetchData().catch(console.error);
-    }, []);
+    }, [employeeId]);
 
     const changeFullName = event => {
         setFullname(event.target.value);
@@ -47,6 +48,14 @@ const EditEmployeeForm = ({ employeeId, handleClose, fetchData }) => {
         setAddress(event.target.value);
     }
 
+    const changePassword = event => {
+        setPassword(event.target.value);
+    }
+
+    const changeConfirmPassword = event => {
+        setConfirmPassword(event.target.value);
+    }
+
     const changeActiveDepartment = event => {
         setActiveDepartment(departments.filter(d => d.name === event.target.value)[0]);
     }
@@ -60,13 +69,25 @@ const EditEmployeeForm = ({ employeeId, handleClose, fetchData }) => {
         let response;
 
         try {
+            if (password !== confirmPassword) {
+                Swal.fire({
+                    title: "Passwords don't match!",
+                    icon: "error",
+                    toast: true,
+                    timer: 3000,
+                    position: 'top-right',
+                    timerProgressBar: true,
+                    showConfirmButton: false,
+                });
+            }
+
             if (employeeId) {
-                response = await EmployeeDataService.updateOne(new Employee(employeeId, fullname, email, phone, address, activeDepartment));
+                response = await EmployeeDataService.updateOne(new Employee(employeeId, fullname, email, phone, address, activeDepartment, password));
                 Swal.fire({
                     title: "Employee was updated!",
                     icon: "success",
                     toast: true,
-                    timer: 1000,
+                    timer: 3000,
                     position: 'top-right',
                     timerProgressBar: true,
                     showConfirmButton: false,
@@ -74,12 +95,12 @@ const EditEmployeeForm = ({ employeeId, handleClose, fetchData }) => {
             }
             else {
                 console.log(activeDepartment);
-                response = await EmployeeDataService.createOne(new Employee(-1, fullname, email, phone, address, activeDepartment));
+                response = await EmployeeDataService.createOne(new Employee(-1, fullname, email, phone, address, activeDepartment, password));
                 Swal.fire({
                     title: "Employee was created!",
                     icon: "success",
                     toast: true,
-                    timer: 1000,
+                    timer: 3000,
                     position: 'top-right',
                     timerProgressBar: true,
                     showConfirmButton: false,
@@ -94,7 +115,7 @@ const EditEmployeeForm = ({ employeeId, handleClose, fetchData }) => {
                 title: `Validation error!`,
                 icon: "error",
                 toast: true,
-                timer: 1000,
+                timer: 3000,
                 position: 'top-right',
                 timerProgressBar: true,
                 showConfirmButton: false,
@@ -131,6 +152,10 @@ const EditEmployeeForm = ({ employeeId, handleClose, fetchData }) => {
                             placeholder="Choose department">
                             {addDepartmentOptions()}
                         </select>
+                    </div>
+                    <div className="d-flex flex-row align-items-center my-3">
+                        <label className="mx-3" htmlFor="passwordInput">Password</label>
+                        <input className="form-control" type="password" id="passwordInput" value={password} onChange={changePassword} placeholder="Password"/>
                     </div>
                     <div className="d-flex justify-content-center">
                         <button type="submit" className="btn btn-primary mt-4">Submit</button>
