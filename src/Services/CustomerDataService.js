@@ -36,4 +36,6 @@ class CustomerDataService {
     }
 }
 
-export default new CustomerDataService();
+const customerDataService = new CustomerDataService();
+
+export default customerDataService;

@@ -29,7 +29,7 @@ const CustomersPage = () => {
     
     return (
         <div>
-            <h1 className="mb-4">Customers</h1>
+            <h2 className="mb-4">Customers</h2>
             <div>
                 <button onClick={ event => { handleOpenForm(null, event) } } className="btn btn-outline-primary">
                     <div class="bi bi-plus-circle"> Create new</div>
