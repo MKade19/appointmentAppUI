@@ -14,7 +14,7 @@ const NavigationBar = () => {
         <Navbar bg="light" expand="lg" data-bs-theme="light">
             <Container>
                 <LinkContainer to={'/'}>
-                    <Navbar.Brand>{!user ? '' : user.email}</Navbar.Brand>
+                    <Navbar.Brand>{!user ? '' : user.fullname + ' – ' }</Navbar.Brand>
                 </LinkContainer>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse>

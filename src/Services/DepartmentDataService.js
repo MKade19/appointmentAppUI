@@ -32,4 +32,6 @@ class DepartmentDataService {
     }
 }
 
-export default new DepartmentDataService();
+const departmentDataService = new DepartmentDataService();
+
+export default departmentDataService;

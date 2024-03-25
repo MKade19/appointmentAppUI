@@ -51,10 +51,10 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem("user", JSON.stringify(data.user))
             navigate("/")
             Swal.fire({
-                title: "Login Successful",
+                title: "You are logged in",
                 icon: "success",
                 toast: true,
-                timer: 1000,
+                timer: 3000,
                 position: 'top-right',
                 timerProgressBar: true,
                 showConfirmButton: false,
@@ -64,10 +64,10 @@ export const AuthProvider = ({ children }) => {
             console.log(response.status);
             console.log("there was a server issue");
             Swal.fire({
-                title: "Username or passowrd does not exists",
+                title: "Email does not exist or Incorrect Password. Please contact to administrator",
                 icon: "error",
                 toast: true,
-                timer: 1000,
+                timer: 3000,
                 position: 'top-right',
                 timerProgressBar: true,
                 showConfirmButton: false,
@@ -95,7 +95,7 @@ export const AuthProvider = ({ children }) => {
                 title: "Registration Successful, Login Now",
                 icon: "success",
                 toast: true,
-                timer: 1000,
+                timer: 3000,
                 position: 'top-right',
                 timerProgressBar: true,
                 showConfirmButton: false,
@@ -107,7 +107,7 @@ export const AuthProvider = ({ children }) => {
                 title: "An Error Occured " + response.status,
                 icon: "error",
                 toast: true,
-                timer: 1000,
+                timer: 3000,
                 position: 'top-right',
                 timerProgressBar: true,
                 showConfirmButton: false,
@@ -122,10 +122,10 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem("user");
         navigate("/auth/sign-in");
         Swal.fire({
-            title: "You have been logged out...",
+            title: "You are logged out",
             icon: "success",
             toast: true,
-            timer: 1000,
+            timer: 3000,
             position: 'top-right',
             timerProgressBar: true,
             showConfirmButton: false,
@@ -145,10 +145,10 @@ export const AuthProvider = ({ children }) => {
 
         if(response.status === 200){
             Swal.fire({
-                title: "You have changed your password...",
+                title: "You have changed a password successfully",
                 icon: "success",
                 toast: true,
-                timer: 1000,
+                timer: 3000,
                 position: 'top-right',
                 timerProgressBar: true,
                 showConfirmButton: false,
@@ -162,7 +162,7 @@ export const AuthProvider = ({ children }) => {
                 title: "An Error Occured " + response.status,
                 icon: "error",
                 toast: true,
-                timer: 1000,
+                timer: 3000,
                 position: 'top-right',
                 timerProgressBar: true,
                 showConfirmButton: false,
