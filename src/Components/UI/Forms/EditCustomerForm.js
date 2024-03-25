@@ -1,27 +1,39 @@
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import DepartmentDataService from "../../../Services/DepartmentDataService";
-import Department from "../../../Models/Department";
+import CustomerDataService from "../../../Services/CustomerDataService";
+import Customer from "../../../Models/Customer";
 
-const EditDepartmentForm = ({ departmentId, handleClose, fetchData }) => {
-    const [name, setName] = useState('');
+const EditCustomerForm = ({ customerId, handleClose, fetchData }) => {
+    const [fullname, setFullName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
     const [address, setAddress] = useState('');
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await DepartmentDataService.getById(departmentId);
-            setName(response.data.name);
+            const response = await CustomerDataService.getById(customerId);
+            setFullName(response.data.fullname);
+            setEmail(response.data.email);
+            setPhone(response.data.phone);
             setAddress(response.data.address);
         } 
 
-        if (departmentId) {
+        if (customerId) {
             fetchData().catch(console.error);
         }
     }, []);
 
-    const changeName = event => {
-        setName(event.target.value);
+    const changeFullName = event => {
+        setFullName(event.target.value);
     }
+
+    const changeEmail = event => {
+        setEmail(event.target.value);
+    }
+
+    const changePhone = event => {
+        setPhone(event.target.value);
+    }    
 
     const changeAddress = event => {
         setAddress(event.target.value);
@@ -32,10 +44,10 @@ const EditDepartmentForm = ({ departmentId, handleClose, fetchData }) => {
         let response;
 
         try {
-            if (departmentId) {
-                response = await DepartmentDataService.updateOne(new Department(departmentId, name, address));
+            if (customerId) {
+                response = await CustomerDataService.updateOne(new Customer(customerId, fullname, email, phone, address));
                 Swal.fire({
-                    title: "Department has been updated",
+                    title: "Customer has been updated",
                     icon: "success",
                     toast: true,
                     timer: 3000,
@@ -45,9 +57,9 @@ const EditDepartmentForm = ({ departmentId, handleClose, fetchData }) => {
                 });
             }
             else {
-                response = await DepartmentDataService.createOne(new Department(-1, name, address));
+                response = await CustomerDataService.createOne(new Customer(-1, fullname, email, phone, address));
                 Swal.fire({
-                    title: "Department has been created",
+                    title: "Customer has been created",
                     icon: "success",
                     toast: true,
                     timer: 3000,
@@ -78,9 +90,17 @@ const EditDepartmentForm = ({ departmentId, handleClose, fetchData }) => {
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <div className="flex-row my-3">
-                        <label className="mx-3" htmlFor="nameInput">Name</label>
-                        <input className="form-control" type="text" id="nameInput" value={name} onChange={changeName} placeholder="Enter name"/>
+                        <label className="mx-3" htmlFor="fullNameInput">Fullname</label>
+                        <input className="form-control" type="text" id="fullNameInput" value={fullname} onChange={changeFullName} placeholder="Enter fullname"/>
                     </div>
+                    <div className="flex-row my-3">
+                        <label className="mx-3" htmlFor="emailInput">Email</label>
+                        <input className="form-control" type="text" id="emailInput" value={email} onChange={changeEmail} placeholder="Enter email"/>
+                    </div>
+                    <div className="flex-row my-3">
+                        <label className="mx-3" htmlFor="phoneInput">Phone</label>
+                        <input className="form-control" type="text" id="phoneInput" value={phone} onChange={changePhone} placeholder="Enter phone"/>
+                    </div>                                        
                     <div className="flex-row my-3">
                         <label className="mx-3" htmlFor="addressInput">Address</label>
                         <input className="form-control" type="text" id="addressInput" value={address} onChange={changeAddress} placeholder="Enter address"/>
@@ -94,4 +114,4 @@ const EditDepartmentForm = ({ departmentId, handleClose, fetchData }) => {
     )
 }
 
-export default EditDepartmentForm;
+export default EditCustomerForm;

@@ -28,11 +28,6 @@ const ChangePasswordForm = () => {
     const handleSubmit = async event => {
         event.preventDefault();
         await changePassword(email, oldPassword, newPassword, confirmPassword);
-
-        console.log(email);
-        console.log(oldPassword);
-        console.log(newPassword);
-        console.log(confirmPassword);
     }
 
     return (

@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
-import DepartmentsTable from "../UI/Tables/DepartmentTable";
-import DepartmentDataService from "../../Services/DepartmentDataService";
-import EditDepartmentModal from "../UI/Modals/EditDepartmentModal";
+import CustomersTable from "../UI/Tables/CustomerTable";
+import CustomerDataService from "../../Services/CustomerDataService";
+import EditCustomerModal from "../UI/Modals/EditCustomerModal";
 
-const DepartmentsPage = () => {
+const CustomersPage = () => {
     const [editFormOpened, setEditFormOpened] = useState(false);
-    const [departmentId, setDepartmentId] = useState(null);
-    const [departments, setDepartments] = useState([]);
+    const [customerId, setCustomerId] = useState(null);
+    const [customers, setCustomers] = useState([]);
 
     const handleOpenForm = (id, event) => {
-        setDepartmentId(id);
+        setCustomerId(id);
         setEditFormOpened(true);
     }
 
@@ -18,30 +18,30 @@ const DepartmentsPage = () => {
     }
 
     const fetchData = async () => {
-        const departmentsData = await DepartmentDataService.getAll()
-        setDepartments(departmentsData.data);
+        const customersData = await CustomerDataService.getAll()
+        setCustomers(customersData.data);
     }
 
     useEffect(() => {
         fetchData().catch(console.error);
-        document.title = 'Departments - Appointments';
+        document.title = 'Customers - Appointments';
     }, []);
     
     return (
         <div>
-            <h1 className="mb-4">Departments</h1>
+            <h1 className="mb-4">Customers</h1>
             <div>
                 <button onClick={ event => { handleOpenForm(null, event) } } className="btn btn-outline-primary">
-                    <div className="bi bi-plus-circle"> Create new</div>
+                    <div class="bi bi-plus-circle"> Create new</div>
                 </button>
             </div>
-            <DepartmentsTable 
-                departments={ departments } 
+            <CustomersTable 
+                customers={ customers } 
                 handleOpenForm={ handleOpenForm } 
                 fetchData={ fetchData }
             />
-            <EditDepartmentModal 
-                departmentId={ departmentId } 
+            <EditCustomerModal 
+                customerId={ customerId } 
                 showModal={ editFormOpened } 
                 handleClose={ handleCloseForm }
                 fetchData={ fetchData }
@@ -50,4 +50,4 @@ const DepartmentsPage = () => {
     )
 }
 
-export default DepartmentsPage;
+export default CustomersPage;

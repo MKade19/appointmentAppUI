@@ -18,9 +18,6 @@ const LoginForm = () => {
     const handleSubmit = async event => {
         event.preventDefault();
         await loginUser(email, password);
-
-        console.log(email);
-        console.log(password);
     }
 
     return (
