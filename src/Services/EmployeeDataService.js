@@ -16,6 +16,7 @@ class EmployeeDataService {
             phone: employee.phone,
             address: employee.address,
             department: employee.department.id,
+            role: employee.role.id,
             password: employee.password
         }
 
@@ -29,6 +30,7 @@ class EmployeeDataService {
             phone: employee.phone,
             address: employee.address,
             department: employee.department.id,
+            role: employee.role.id
         }
 
         if (employee.password !== '') {

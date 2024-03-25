@@ -1,4 +1,4 @@
-import NavigationBar from "../../UI/NavigationBar/NavigationBar"
+import NavigationBar from "../../UI/NavigationBar/Navigationbar"
 
 const Header = () => {
     return (

@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 import EmployeeDataService from "../../../Services/EmployeeDataService";
 import Employee from "../../../Models/Employee"
 import DepartmentDataService from "../../../Services/DepartmentDataService";
+import RoleDataService from "../../../Services/RoleDataService";
 
 const EditEmployeeForm = ({ employeeId, handleClose, fetchData }) => {
     const [fullname, setFullname] = useState('');
@@ -13,6 +14,8 @@ const EditEmployeeForm = ({ employeeId, handleClose, fetchData }) => {
     const [departments, setDepartments] = useState([]);
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [activeRole, setActiveRole] = useState({});
+    const [roles, setRoles] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -26,6 +29,8 @@ const EditEmployeeForm = ({ employeeId, handleClose, fetchData }) => {
                 setEmail(employeeResponse.data.email);
                 setPhone(employeeResponse.data.phone);
                 setAddress(employeeResponse.data.address);
+                setActiveDepartment(employeeResponse.data.department);
+                setActiveRole(employeeResponse.data.role);
             }
         } 
 
@@ -64,6 +69,14 @@ const EditEmployeeForm = ({ employeeId, handleClose, fetchData }) => {
         return departments.map(d => <option key={d.id}>{d.name}</option>);
     }
 
+    const changeActiveRole = event => {
+        setActiveRole(roles.filter(d => d.name === event.target.value)[0]);
+    }
+
+    const addRoleOptions = () => {
+        return roles.map(d => <option key={d.id}>{d.name}</option>);
+    }    
+
     const handleSubmit = async event => {
         event.preventDefault();
         let response;
@@ -82,9 +95,9 @@ const EditEmployeeForm = ({ employeeId, handleClose, fetchData }) => {
             }
 
             if (employeeId) {
-                response = await EmployeeDataService.updateOne(new Employee(employeeId, fullname, email, phone, address, activeDepartment, password));
+                response = await EmployeeDataService.updateOne(new Employee(employeeId, fullname, email, phone, address, activeDepartment, activeRole, password));
                 Swal.fire({
-                    title: "Employee was updated!",
+                    title: "Employee has been updated",
                     icon: "success",
                     toast: true,
                     timer: 3000,
@@ -94,9 +107,9 @@ const EditEmployeeForm = ({ employeeId, handleClose, fetchData }) => {
                 });
             }
             else {
-                response = await EmployeeDataService.createOne(new Employee(-1, fullname, email, phone, address, activeDepartment, password));
+                response = await EmployeeDataService.createOne(new Employee(-1, fullname, email, phone, address, activeDepartment, activeRole, password));
                 Swal.fire({
-                    title: "Employee was created!",
+                    title: "Employee has been created",
                     icon: "success",
                     toast: true,
                     timer: 3000,
@@ -126,23 +139,23 @@ const EditEmployeeForm = ({ employeeId, handleClose, fetchData }) => {
         <div className="my-3">
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <div className="d-flex flex-row align-items-center my-3">
+                    <div className="flex-row align-items-center my-3">
                         <label className="mx-3" htmlFor="nameInput">Name</label>
                         <input className="form-control" type="text" id="nameInput" value={fullname} onChange={changeFullName} placeholder="Enter name"/>
                     </div>
-                    <div className="d-flex flex-row align-items-center my-3">
+                    <div className="flex-row align-items-center my-3">
                         <label className="mx-3" htmlFor="emailInput">Email</label>
                         <input className="form-control" type="email" id="emailInput" value={email} onChange={changeEmail} placeholder="Enter email"/>
                     </div>
-                    <div className="d-flex flex-row align-items-center my-3">
+                    <div className="flex-row align-items-center my-3">
                         <label className="mx-3" htmlFor="phoneInput">Phone</label>
                         <input className="form-control" type="text" id="phoneInput" value={phone} onChange={changePhone} placeholder="Enter phone"/>
                     </div>
-                    <div className="d-flex flex-row align-items-center my-3">
+                    <div className="flex-row align-items-center my-3">
                         <label className="mx-3" htmlFor="addressInput">Address</label>
                         <input className="form-control" type="text" id="addressInput" value={address} onChange={changeAddress} placeholder="Enter address"/>
                     </div>
-                    <div className="d-flex flex-row align-items-center my-3">
+                    <div className="flex-row align-items-center my-3">
                         <label className="mx-3" htmlFor="departmentSelect">Department</label>
                         <select className="form-select" 
                             id="departmentSelect"
@@ -152,12 +165,22 @@ const EditEmployeeForm = ({ employeeId, handleClose, fetchData }) => {
                             {addDepartmentOptions()}
                         </select>
                     </div>
-                    <div className="d-flex flex-row align-items-center my-3">
+                    <div className="flex-row align-items-center my-3">
+                        <label className="mx-3" htmlFor="roleSelect">Role</label>
+                        <select className="form-select" 
+                            id="roleSelect"
+                            value={activeRole.name} 
+                            onChange={changeActiveRole} 
+                            placeholder="Choose role">
+                            {addRoleOptions()}
+                        </select>
+                    </div>                    
+                    <div className="flex-row align-items-center my-3">
                         <label className="mx-3" htmlFor="passwordInput">Password</label>
-                        <input className="form-control" type="password" id="passwordInput" value={password} onChange={changePassword} placeholder="Password"/>
+                        <input className="form-control" type="password" id="passwordInput" value={password} onChange={changePassword} placeholder="Set New Password"/>
                     </div>
-                    <div className="d-flex justify-content-center">
-                        <button type="submit" className="btn btn-primary mt-4">Submit</button>
+                    <div className="d-flex justify-content-end">
+                        <button type="submit" className="btn btn-primary">Submit</button>
                     </div>
                 </div>
             </form>

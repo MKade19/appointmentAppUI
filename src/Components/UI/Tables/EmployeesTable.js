@@ -5,7 +5,8 @@ import Swal from "sweetalert2";
 const EmployeesTable = ({ handleOpenForm, employees, fetchData }) => {
     const deleteHandler = async (id, event) => {
         Swal.fire({
-            title: 'Do you want to delete this employee?',
+            title: "Please confirm",
+            text: 'Are you sure, to delete the employee? All appointments the employees involve will be deleted as well',
             showDenyButton: true,
             confirmButtonText: 'Yes',
             denyButtonText: 'No',
@@ -22,7 +23,7 @@ const EmployeesTable = ({ handleOpenForm, employees, fetchData }) => {
                     title: "Employee was deleted!",
                     icon: "success",
                     toast: true,
-                    timer: 1000,
+                    timer: 3000,
                     position: 'top-right',
                     timerProgressBar: true,
                     showConfirmButton: false,
@@ -47,6 +48,7 @@ const EmployeesTable = ({ handleOpenForm, employees, fetchData }) => {
                 <td>{employee.fullname}</td>
                 <td>{employee.address}</td>
                 <td>{employee.department.name}</td>
+                <td>{employee.role.name}</td>
                 <td>
                     <button className='btn btn-outline-primary' onClick={ event => { handleOpenForm(employee.id, event) } }>
                         <i className="bi bi-pen"></i>
@@ -71,6 +73,7 @@ const EmployeesTable = ({ handleOpenForm, employees, fetchData }) => {
                         <th>Phone</th>
                         <th>Address</th>
                         <th>Department</th>
+                        <th>Role</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
