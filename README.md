@@ -1,3 +1,13 @@
+## How to start
+
+1. Clone `https://github.com/MKade19/appointmentAppUI/tree/main` to local
+2. Run `npm install`
+3. Run `npm run start`
+4. Open `http://localhost:3000/`
+5. Login with Email: `appointment_admin@neoviso.com`, Password: `34fEWGTYo24gfsag`
+
+## Initial requirements
+
 Front-end (Vue or React)
 Design is not a very important part, but you should provide a clean and simple interface. You can use any component library.
 
