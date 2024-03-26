@@ -2,8 +2,11 @@ import { useState, useEffect } from "react";
 import DepartmentsTable from "../UI/Tables/DepartmentTable";
 import DepartmentDataService from "../../Services/DepartmentDataService";
 import EditDepartmentModal from "../UI/Modals/EditDepartmentModal";
+import { useContext } from 'react';
+import AuthContext from '../Context/AuthContext';
 
 const DepartmentsPage = () => {
+    const { user } = useContext(AuthContext);
     const [editFormOpened, setEditFormOpened] = useState(false);
     const [departmentId, setDepartmentId] = useState(null);
     const [departments, setDepartments] = useState([]);
@@ -31,9 +34,11 @@ const DepartmentsPage = () => {
         <div>
             <h2 className="mb-4">Departments</h2>
             <div>
+            {user().userRole.permission_department === 'editable' ? 
                 <button onClick={ event => { handleOpenForm(null, event) } } className="btn btn-outline-primary">
                     <div className="bi bi-plus-circle"> Create new</div>
-                </button>
+                </button> : null
+            }
             </div>
             <DepartmentsTable 
                 departments={ departments } 

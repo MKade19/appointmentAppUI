@@ -17,20 +17,24 @@ const NavigationBar = () => {
                 <Navbar.Collapse>
                     <Nav className="me-auto">
                         <LinkContainer to={"/"}>
-                            <NavLink>Home</NavLink>
+                            <NavLink>Appointments</NavLink>
                         </LinkContainer>
                         <LinkContainer to={"/customers"}>
                             <NavLink>Customers</NavLink>
                         </LinkContainer>
-                        <LinkContainer to={"/departments"}>
-                            <NavLink>Departments</NavLink>
-                        </LinkContainer>
-                        <LinkContainer to={"/employees"}>
-                            <NavLink>Employees</NavLink>
-                        </LinkContainer>
+                        {user().userRole.permission_department !== 'none' ? 
+                            <LinkContainer  to={"/departments"}>
+                                <NavLink>Departments</NavLink>
+                            </LinkContainer> : null
+                        }
+                        {user().userRole.permission_employee !== 'none' ? 
+                            <LinkContainer to={"/employees"}>
+                                <NavLink>Employees</NavLink>
+                            </LinkContainer> : null
+                        }
                     </Nav>
-                    <Navbar.Brand className='mr-5'>{!user() ? '' : user().fullname + ' – ' }</Navbar.Brand>
-                    { !user ? null : <NavLink onClick={handleLogout}>Log out</NavLink> }
+                    <Navbar>{!user() ? '' : user().fullname + ' – ' + (!user().userRole ? '' : user().userRole.name)}&nbsp;&nbsp;&nbsp;
+                    { !user ? null : <NavLink onClick={handleLogout}>Log out</NavLink> }</Navbar>
                 </Navbar.Collapse>
             </Container>
         </Navbar>

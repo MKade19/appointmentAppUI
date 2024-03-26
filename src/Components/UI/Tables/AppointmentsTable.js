@@ -1,11 +1,15 @@
 import Table from 'react-bootstrap/Table';
 import AppointmentDataService from '../../../Services/AppointmentDataService';
 import Swal from "sweetalert2";
+import { useContext } from 'react';
+import AuthContext from '../../Context/AuthContext';
 
 const AppointmentsTable = ({ handleOpenForm, appointments, fetchData }) => {
+    const { user } = useContext(AuthContext);
     const deleteHandler = async (id, event) => {
         Swal.fire({
-            title: 'Do you want to delete this employee?',
+            title: "Please confirm",
+            text: 'Are you sure, to delete the appointment?',
             showDenyButton: true,
             confirmButtonText: 'Yes',
             denyButtonText: 'No',
@@ -19,7 +23,7 @@ const AppointmentsTable = ({ handleOpenForm, appointments, fetchData }) => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 Swal.fire({
-                    title: "Appointment was deleted!",
+                    title: "Appointment has been deleted",
                     icon: "success",
                     toast: true,
                     timer: 1000,
@@ -48,14 +52,18 @@ const AppointmentsTable = ({ handleOpenForm, appointments, fetchData }) => {
                 <td>{appointment.employee.fullname}</td>
                 <td>{appointment.customer.fullname}</td>
                 <td>
+                {user().userRole.permission_appointment === 'editable' ? 
                     <button className='btn btn-outline-primary' onClick={ event => { handleOpenForm(appointment.id, event) } }>
                         <i className="bi bi-pen"></i>
-                    </button>
+                    </button> : null
+                }
                 </td>
                 <td>
+                {user().userRole.permission_appointment === 'editable' ? 
                     <button className='btn btn-outline-danger' onClick={ event => { deleteHandler(appointment.id, event) } }>
                         <i className="bi bi-trash"></i>
-                    </button>
+                    </button> : null
+                }   
                 </td>
             </tr>
         )

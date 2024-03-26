@@ -3,6 +3,7 @@ import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import AuthDataService from "../../Services/AuthDataService";
+import RoleDataService from "../../Services/RoleDataService";
 
 const AuthContext = createContext();
 
@@ -25,7 +26,13 @@ export const AuthProvider = ({ children }) => {
             }
 
             localStorage.setItem("authTokens", JSON.stringify(tokens))
-            localStorage.setItem("user", JSON.stringify(data.user))
+            localStorage.setItem("user", JSON.stringify(data.user))            
+            if(localStorage.getItem("user")){
+                let userFromStorage = JSON.parse(localStorage.getItem("user"));
+                const response = await RoleDataService.getById(data.user.role);
+                response ? userFromStorage.userRole = response.data : userFromStorage.userRole = null;
+                localStorage.setItem("user", JSON.stringify(userFromStorage));
+            } 
             navigate("/")
             Swal.fire({
                 title: "You are logged in",
