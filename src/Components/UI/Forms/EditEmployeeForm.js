@@ -20,8 +20,11 @@ const EditEmployeeForm = ({ employeeId, handleClose, fetchData }) => {
     useEffect(() => {
         const fetchData = async () => {
             const departmentsResponse = await DepartmentDataService.getAll();
-            setDepartments(departmentsResponse.data);
+            const rolesResponse = await RoleDataService.getAll();
+            setDepartments(departmentsResponse.data);            
             setActiveDepartment(departmentsResponse.data[0]);
+            setRoles(rolesResponse.data);
+            setActiveRole(rolesResponse.data[0]);            
 
             if (employeeId) {
                 const employeeResponse = await EmployeeDataService.getById(employeeId);
@@ -82,18 +85,6 @@ const EditEmployeeForm = ({ employeeId, handleClose, fetchData }) => {
         let response;
 
         try {
-            if (password !== confirmPassword) {
-                Swal.fire({
-                    title: "Passwords don't match!",
-                    icon: "error",
-                    toast: true,
-                    timer: 3000,
-                    position: 'top-right',
-                    timerProgressBar: true,
-                    showConfirmButton: false,
-                });
-            }
-
             if (employeeId) {
                 response = await EmployeeDataService.updateOne(new Employee(employeeId, fullname, email, phone, address, activeDepartment, activeRole, password));
                 Swal.fire({
@@ -145,7 +136,7 @@ const EditEmployeeForm = ({ employeeId, handleClose, fetchData }) => {
                     </div>
                     <div className="flex-row align-items-center my-3">
                         <label className="mx-3" htmlFor="emailInput">Email</label>
-                        <input className="form-control" type="email" id="emailInput" value={email} onChange={changeEmail} placeholder="Enter email"/>
+                        <input className="form-control" disabled={ employeeId } type="email" id="emailInput" value={email} onChange={changeEmail} placeholder="Enter email"/>
                     </div>
                     <div className="flex-row align-items-center my-3">
                         <label className="mx-3" htmlFor="phoneInput">Phone</label>

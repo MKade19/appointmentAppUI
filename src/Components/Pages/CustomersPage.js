@@ -2,8 +2,11 @@ import { useState, useEffect } from "react";
 import CustomersTable from "../UI/Tables/CustomerTable";
 import CustomerDataService from "../../Services/CustomerDataService";
 import EditCustomerModal from "../UI/Modals/EditCustomerModal";
+import { useContext } from 'react';
+import AuthContext from '../Context/AuthContext';
 
 const CustomersPage = () => {
+    const { user } = useContext(AuthContext);
     const [editFormOpened, setEditFormOpened] = useState(false);
     const [customerId, setCustomerId] = useState(null);
     const [customers, setCustomers] = useState([]);
@@ -30,11 +33,13 @@ const CustomersPage = () => {
     return (
         <div>
             <h2 className="mb-4">Customers</h2>
+            {user().userRole.permission_customer === 'editable' ? 
             <div>
                 <button onClick={ event => { handleOpenForm(null, event) } } className="btn btn-outline-primary">
                     <div class="bi bi-plus-circle"> Create new</div>
                 </button>
-            </div>
+            </div> : null
+            }
             <CustomersTable 
                 customers={ customers } 
                 handleOpenForm={ handleOpenForm } 

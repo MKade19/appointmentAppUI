@@ -30,6 +30,8 @@ const EditAppointmentForm = ({ appointmentId, handleClose, fetchData }) => {
                 setDate(appointmentsResponse.data.date.split('T')[0]);
                 setStart(appointmentsResponse.data.start);
                 setEnd(appointmentsResponse.data.end);
+                setActiveEmployee(appointmentsResponse.data.employee);
+                setActiveCustomer(appointmentsResponse.data.customer);
             }
         } 
 
@@ -72,7 +74,7 @@ const EditAppointmentForm = ({ appointmentId, handleClose, fetchData }) => {
             if (appointmentId) {
                 response = await AppointmentDataService.updateOne(new Appointment(appointmentId, date, start, end, activeEmployee, activeCustomer));
                 Swal.fire({
-                    title: "Appointment was updated!",
+                    title: "Appointment has been updated",
                     icon: "success",
                     toast: true,
                     timer: 3000,
@@ -84,7 +86,7 @@ const EditAppointmentForm = ({ appointmentId, handleClose, fetchData }) => {
             else {
                 response = await AppointmentDataService.createOne(new Appointment(appointmentId, date, start, end, activeEmployee, activeCustomer));
                 Swal.fire({
-                    title: "Appointment was created!",
+                    title: "Appointment has been created",
                     icon: "success",
                     toast: true,
                     timer: 3000,
@@ -114,19 +116,19 @@ const EditAppointmentForm = ({ appointmentId, handleClose, fetchData }) => {
         <div className="my-3">
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <div className="d-flex flex-row align-items-center my-3">
+                    <div className="flex-row align-items-center my-3">
                         <label className="mx-3" htmlFor="dateInput">Date</label>
                         <input className="form-control" type="date" id="dateInput" value={date} onChange={changeDate}/>
                     </div>
-                    <div className="d-flex flex-row align-items-center my-3">
+                    <div className="flex-row align-items-center my-3">
                         <label className="mx-3" htmlFor="startInput">Start</label>
                         <input type="time" className="form-control" id="startInput" value={start} onChange={changeStart}/>
                     </div>
-                    <div className="d-flex flex-row align-items-center my-3">
+                    <div className="flex-row align-items-center my-3">
                         <label className="mx-3" htmlFor="endInput">End</label>
                         <input type="time" className="form-control" id="endInput" value={end} onChange={changeEnd}/>
                     </div>
-                    <div className="d-flex flex-row align-items-center my-3">
+                    <div className="flex-row align-items-center my-3">
                         <label className="mx-3" htmlFor="employeeSelect">Employee</label>
                         <select className="form-select" 
                             id="employeeSelect"
@@ -136,7 +138,7 @@ const EditAppointmentForm = ({ appointmentId, handleClose, fetchData }) => {
                             {addEmployeeOptions()}
                         </select>
                     </div>
-                    <div className="d-flex flex-row align-items-center my-3">
+                    <div className="flex-row align-items-center my-3">
                         <label className="mx-3" htmlFor="customerSelect">Customer</label>
                         <select className="form-select" 
                             id="customerSelect"
@@ -146,7 +148,7 @@ const EditAppointmentForm = ({ appointmentId, handleClose, fetchData }) => {
                             {addCustomersOptions()}
                         </select>
                     </div>
-                    <div className="d-flex justify-content-center">
+                    <div className="d-flex justify-content-end">
                         <button type="submit" className="btn btn-primary mt-4">Submit</button>
                     </div>
                 </div>

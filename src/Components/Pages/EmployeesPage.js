@@ -2,8 +2,11 @@ import { useState, useEffect } from "react";
 import EmployeesTable from "../UI/Tables/EmployeesTable";
 import EmployeeDataService from "../../Services/EmployeeDataService";
 import EditEmployeeModal from "../UI/Modals/EditEmployeeModal";
+import { useContext } from 'react';
+import AuthContext from '../Context/AuthContext';
 
 const EmployeesPage = () => {
+    const { user } = useContext(AuthContext);
     const [editFormOpened, setEditFormOpened] = useState(false);
     const [employeeId, setEmployeeId] = useState(null);
     const [employees, setEmployees] = useState([]);
@@ -31,9 +34,11 @@ const EmployeesPage = () => {
         <div>
             <h2 className="mb-4">Employees</h2>
             <div>
+            {user().userRole.permission_employee === 'editable' ? 
                 <button onClick={ event => { handleOpenForm(null, event) } } className="btn btn-outline-primary">
                     <div className="bi bi-plus-circle"> Create new</div>
-                </button>
+                </button> : null
+            }
             </div>
             <EmployeesTable 
                 employees={ employees } 

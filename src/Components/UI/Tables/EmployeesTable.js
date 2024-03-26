@@ -1,8 +1,11 @@
 import Table from 'react-bootstrap/Table';
 import EmployeeDataService from '../../../Services/EmployeeDataService';
 import Swal from "sweetalert2";
+import { useContext } from 'react';
+import AuthContext from '../../Context/AuthContext';
 
 const EmployeesTable = ({ handleOpenForm, employees, fetchData }) => {
+    const { user } = useContext(AuthContext);
     const deleteHandler = async (id, event) => {
         Swal.fire({
             title: "Please confirm",
@@ -45,19 +48,23 @@ const EmployeesTable = ({ handleOpenForm, employees, fetchData }) => {
             <tr key={employee.id}>
                 <td>{employee.fullname}</td>
                 <td>{employee.email}</td>
-                <td>{employee.fullname}</td>
+                <td>{employee.phone}</td>
                 <td>{employee.address}</td>
                 <td>{employee.department.name}</td>
                 <td>{employee.role.name}</td>
                 <td>
+                {user().userRole.permission_employee === 'editable' ?
                     <button className='btn btn-outline-primary' onClick={ event => { handleOpenForm(employee.id, event) } }>
                         <i className="bi bi-pen"></i>
-                    </button>
+                    </button> : null
+                }
                 </td>
                 <td>
+                {user().userRole.permission_employee === 'editable' ?
                     <button className='btn btn-outline-danger' onClick={ event => { deleteHandler(employee.id, event) } }>
                         <i className="bi bi-trash"></i>
-                    </button>
+                    </button> : null
+                }
                 </td>
             </tr>
         )

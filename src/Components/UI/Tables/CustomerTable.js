@@ -1,8 +1,11 @@
 import Table from 'react-bootstrap/Table';
 import CustomerDataService from '../../../Services/CustomerDataService';
 import Swal from "sweetalert2";
+import { useContext } from 'react';
+import AuthContext from '../../Context/AuthContext';
 
 const CustomersTable = ({ handleOpenForm, customers, fetchData }) => {
+    const { user } = useContext(AuthContext);
     const deleteHandler = async (id, event) => {
         Swal.fire({
             title: "Please confirm",
@@ -48,14 +51,18 @@ const CustomersTable = ({ handleOpenForm, customers, fetchData }) => {
                 <td>{customer.phone}</td>
                 <td>{customer.address}</td>
                 <td>
+                {user().userRole.permission_customer === 'editable' ? 
                     <button className='btn btn-outline-primary' onClick={ event => { handleOpenForm(customer.id, event) } }>
                         <i class="bi bi-pen"></i>
-                    </button>
+                    </button> : null
+                }
                 </td>
                 <td>
+                {user().userRole.permission_customer === 'editable' ? 
                     <button className='btn btn-outline-danger' onClick={ event => { deleteHandler(customer.id, event) } }>
                         <i class="bi bi-trash"></i>
-                    </button>
+                    </button> : null
+                }
                 </td>
             </tr>
         )

@@ -1,8 +1,11 @@
 import Table from 'react-bootstrap/Table';
 import DepartmentDataService from '../../../Services/DepartmentDataService';
 import Swal from "sweetalert2";
+import { useContext } from 'react';
+import AuthContext from '../../Context/AuthContext';
 
 const DepartmentsTable = ({ handleOpenForm, departments, fetchData }) => {
+    const { user } = useContext(AuthContext);
     const deleteHandler = async (id, event) => {
         Swal.fire({
             title: "Please confirm",
@@ -46,14 +49,18 @@ const DepartmentsTable = ({ handleOpenForm, departments, fetchData }) => {
                 <td>{department.name}</td>
                 <td>{department.address}</td>
                 <td>
+                {user().userRole.permission_department === 'editable' ?
                     <button className='btn btn-outline-primary' onClick={ event => { handleOpenForm(department.id, event) } }>
                         <i className="bi bi-pen"></i>
-                    </button>
+                    </button> : null
+                }
                 </td>
                 <td>
+                {user().userRole.permission_department === 'editable' ?
                     <button className='btn btn-outline-danger' onClick={ event => { deleteHandler(department.id, event) } }>
                         <i className="bi bi-trash"></i>
-                    </button>
+                    </button> : null
+                }                   
                 </td>
             </tr>
         )
