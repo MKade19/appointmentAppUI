@@ -8,7 +8,7 @@ const instance = axios.create({
 });
 
 /**
- * @param {import('navigate').Navigate} navigate - from useHistory() hook
+ * @param {import('navigate').Navigate} navigate - from useNavigate() hook
  */
 
 export const setupInterceptors = navigate => {

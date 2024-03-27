@@ -118,15 +118,15 @@ const EditAppointmentForm = ({ appointmentId, handleClose, fetchData }) => {
                 <div className="form-group">
                     <div className="flex-row align-items-center my-3">
                         <label className="mx-3" htmlFor="dateInput">Date</label>
-                        <input className="form-control" type="date" id="dateInput" value={date} onChange={changeDate}/>
+                        <input className="form-control" required type="date" id="dateInput" value={date} onChange={changeDate}/>
                     </div>
                     <div className="flex-row align-items-center my-3">
                         <label className="mx-3" htmlFor="startInput">Start</label>
-                        <input type="time" className="form-control" id="startInput" value={start} onChange={changeStart}/>
+                        <input type="time" className="form-control" required id="startInput" value={start} onChange={changeStart}/>
                     </div>
                     <div className="flex-row align-items-center my-3">
                         <label className="mx-3" htmlFor="endInput">End</label>
-                        <input type="time" className="form-control" id="endInput" value={end} onChange={changeEnd}/>
+                        <input type="time" className="form-control" required id="endInput" value={end} onChange={changeEnd}/>
                     </div>
                     <div className="flex-row align-items-center my-3">
                         <label className="mx-3" htmlFor="employeeSelect">Employee</label>

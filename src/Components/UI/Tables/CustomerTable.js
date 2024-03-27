@@ -53,14 +53,14 @@ const CustomersTable = ({ handleOpenForm, customers, fetchData }) => {
                 <td>
                 {user().userRole.permission_customer === 'editable' ? 
                     <button className='btn btn-outline-primary' onClick={ event => { handleOpenForm(customer.id, event) } }>
-                        <i class="bi bi-pen"></i>
+                        <i className="bi bi-pen"></i>
                     </button> : null
                 }
                 </td>
                 <td>
                 {user().userRole.permission_customer === 'editable' ? 
                     <button className='btn btn-outline-danger' onClick={ event => { deleteHandler(customer.id, event) } }>
-                        <i class="bi bi-trash"></i>
+                        <i className="bi bi-trash"></i>
                     </button> : null
                 }
                 </td>
