@@ -18,12 +18,12 @@ const EditAppointmentForm = ({ appointmentId, handleClose, fetchData }) => {
     useEffect(() => {
         const fetchData = async () => {
             const employeesResponse = await EmployeeDataService.getAll();
-            setEmployees(employeesResponse.data);
-            setActiveEmployee(employeesResponse.data[0]);
+            setEmployees(employeesResponse.data.results);
+            setActiveEmployee(employeesResponse.data.results[0]);
 
             const customersResponse = await CustomerDataService.getAll();
-            setCustomers(customersResponse.data);
-            setActiveCustomer(customersResponse.data[0]);
+            setCustomers(customersResponse.data.results);
+            setActiveCustomer(customersResponse.data.results[0]);
 
             if (appointmentId) {
                 const appointmentsResponse = await AppointmentDataService.getById(appointmentId);
@@ -132,7 +132,7 @@ const EditAppointmentForm = ({ appointmentId, handleClose, fetchData }) => {
                         <label className="mx-3" htmlFor="employeeSelect">Employee</label>
                         <select className="form-select" 
                             id="employeeSelect"
-                            value={activeEmployee.fullname} 
+                            value={ activeEmployee.fullname } 
                             onChange={changeActiveEmployee} 
                             placeholder="Choose employee">
                             {addEmployeeOptions()}
@@ -142,7 +142,7 @@ const EditAppointmentForm = ({ appointmentId, handleClose, fetchData }) => {
                         <label className="mx-3" htmlFor="customerSelect">Customer</label>
                         <select className="form-select" 
                             id="customerSelect"
-                            value={activeCustomer.fullname} 
+                            value={ activeCustomer.fullname } 
                             onChange={changeActiveCustomer} 
                             placeholder="Choose customer">
                             {addCustomersOptions()}

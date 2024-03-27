@@ -13,7 +13,6 @@ const EditEmployeeForm = ({ employeeId, handleClose, fetchData }) => {
     const [activeDepartment, setActiveDepartment] = useState({});
     const [departments, setDepartments] = useState([]);
     const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
     const [activeRole, setActiveRole] = useState({});
     const [roles, setRoles] = useState([]);
 
@@ -21,10 +20,10 @@ const EditEmployeeForm = ({ employeeId, handleClose, fetchData }) => {
         const fetchData = async () => {
             const departmentsResponse = await DepartmentDataService.getAll();
             const rolesResponse = await RoleDataService.getAll();
-            setDepartments(departmentsResponse.data);            
-            setActiveDepartment(departmentsResponse.data[0]);
-            setRoles(rolesResponse.data);
-            setActiveRole(rolesResponse.data[0]);            
+            setDepartments(departmentsResponse.data.results);            
+            setActiveDepartment(departmentsResponse.data.results[0]);
+            setRoles(rolesResponse.data.results);
+            setActiveRole(rolesResponse.data.results[0]);            
 
             if (employeeId) {
                 const employeeResponse = await EmployeeDataService.getById(employeeId);
@@ -58,10 +57,6 @@ const EditEmployeeForm = ({ employeeId, handleClose, fetchData }) => {
 
     const changePassword = event => {
         setPassword(event.target.value);
-    }
-
-    const changeConfirmPassword = event => {
-        setConfirmPassword(event.target.value);
     }
 
     const changeActiveDepartment = event => {

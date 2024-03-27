@@ -22,7 +22,7 @@ const CustomersPage = () => {
 
     const fetchData = async () => {
         const customersData = await CustomerDataService.getAll()
-        setCustomers(customersData.data);
+        setCustomers(customersData.data.results);
     }
 
     useEffect(() => {
