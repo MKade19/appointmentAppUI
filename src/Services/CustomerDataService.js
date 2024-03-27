@@ -5,6 +5,10 @@ class CustomerDataService {
         return await axios.get('customers');
     }
 
+    getChunk = async (page, page_count) => {
+        return await axios.get(`customers/?page=${page}&page_count=${page_count}`);
+    }
+
     getById = async id => {
         return await axios.get(`customers/${id}/`);
     }

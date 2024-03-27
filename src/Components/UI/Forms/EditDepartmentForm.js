@@ -79,14 +79,14 @@ const EditDepartmentForm = ({ departmentId, handleClose, fetchData }) => {
                 <div className="form-group">
                     <div className="flex-row my-3">
                         <label className="mx-3" htmlFor="nameInput">Name</label>
-                        <input className="form-control" type="text" id="nameInput" value={name} onChange={changeName} placeholder="Enter name"/>
+                        <input className="form-control" required type="text" id="nameInput" value={name} onChange={changeName} placeholder="Enter name"/>
                     </div>
                     <div className="flex-row my-3">
                         <label className="mx-3" htmlFor="addressInput">Address</label>
-                        <input className="form-control" type="text" id="addressInput" value={address} onChange={changeAddress} placeholder="Enter address"/>
+                        <input className="form-control" required type="text" id="addressInput" value={address} onChange={changeAddress} placeholder="Enter address"/>
                     </div>
                     <div className="d-flex justify-content-end">
-                        <button type="submit" className="btn btn-primary">Submit</button>
+                        <button type="submit" required className="btn btn-primary">Submit</button>
                     </div>
                 </div>
             </form>

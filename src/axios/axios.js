@@ -8,7 +8,7 @@ const instance = axios.create({
 });
 
 /**
- * @param {import('navigate').Navigate} navigate - from useHistory() hook
+ * @param {import('navigate').Navigate} navigate - from useNavigate() hook
  */
 
 export const setupInterceptors = navigate => {
@@ -26,7 +26,7 @@ export const setupInterceptors = navigate => {
         return response;
     }, async error => {
         const originalRequest = error.config;
-        console.log(error);
+        // console.log(error);
         if (error.response.status === 401) {
             try {
                 const tokens = JSON.parse(localStorage.getItem('authTokens'));

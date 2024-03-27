@@ -26,9 +26,9 @@ const LoginForm = () => {
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label className="my-3" htmlFor="emailInput">Email</label>
-                        <input className="form-control" type="email" id="emailInput" value={email} onChange={changeEmail} placeholder="Enter email"/>
+                        <input className="form-control" required type="email" id="emailInput" value={email} onChange={changeEmail} placeholder="Enter email"/>
                         <label className="my-3" htmlFor="passwordInput">Password</label>
-                        <input className="form-control" type="password" id="passwordInput" value={password} onChange={changePassword} placeholder="Password"/>
+                        <input className="form-control" required type="password" id="passwordInput" value={password} onChange={changePassword} placeholder="Password"/>
                         <button
                             type="submit"
                             className="btn btn-primary mt-4"

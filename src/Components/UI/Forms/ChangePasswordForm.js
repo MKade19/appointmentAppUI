@@ -36,13 +36,13 @@ const ChangePasswordForm = () => {
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
                         <label className="my-3" htmlFor="emailInput">Email</label>
-                        <input className="form-control" type="email" id="emailInput" value={email} onChange={changeEmail} placeholder="Enter email"/>
+                        <input className="form-control" required type="email" id="emailInput" value={email} onChange={changeEmail} placeholder="Enter email"/>
                         <label className="my-3" htmlFor="oldPasswordInput">Old password</label>
-                        <input className="form-control" type="password" id="oldPasswordInput" value={oldPassword} onChange={changeOldPassword} placeholder="Old password"/>
+                        <input className="form-control" required type="password" id="oldPasswordInput" value={oldPassword} onChange={changeOldPassword} placeholder="Old password"/>
                         <label className="my-3" htmlFor="newPasswordInput">New password</label>
-                        <input className="form-control" type="password" id="newPasswordInput" value={newPassword} onChange={changeNewPassword} placeholder="New password"/>
+                        <input className="form-control" required type="password" id="newPasswordInput" value={newPassword} onChange={changeNewPassword} placeholder="New password"/>
                         <label className="my-3" htmlFor="confirmPasswordInput">Confirm new Password</label>
-                        <input className="form-control" type="password" id="confirmPasswordInput" value={confirmPassword} onChange={changeConfirmPassword} placeholder="Confirm new password"/>
+                        <input className="form-control" required type="password" id="confirmPasswordInput" value={confirmPassword} onChange={changeConfirmPassword} placeholder="Confirm new password"/>
                         <button
                             type="submit"
                             className="btn btn-primary mt-4"
