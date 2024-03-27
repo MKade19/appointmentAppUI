@@ -22,7 +22,7 @@ const EmployeesPage = () => {
 
     const fetchData = async () => {
         const employeesData = await EmployeeDataService.getAll();
-        setEmployees(employeesData.data);
+        setEmployees(employeesData.data.results);
     }
 
     useEffect(() => {

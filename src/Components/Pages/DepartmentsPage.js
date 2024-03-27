@@ -21,8 +21,8 @@ const DepartmentsPage = () => {
     }
 
     const fetchData = async () => {
-        const departmentsData = await DepartmentDataService.getAll()
-        setDepartments(departmentsData.data);
+        const departmentsData = await DepartmentDataService.getAll();
+        setDepartments(departmentsData.data.results);
     }
 
     useEffect(() => {
