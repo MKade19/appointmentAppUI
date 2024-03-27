@@ -7,11 +7,13 @@ import AuthContext from '../Context/AuthContext';
 import PaginationBar from "../UI/PaginationBar/PaginationBar";
 
 const HomePage = () => {
+    const INITIAL_PAGE_COUNT = 5;
+
     const { user } = useContext(AuthContext);
     const [editFormOpened, setEditFormOpened] = useState(false);
     const [appointmentId, setAppointmentId] = useState(null);
     const [appointments, setAppointments] = useState([]);
-    const [pageCount, setPageCount] = useState(5);
+    const [pageCount, setPageCount] = useState(INITIAL_PAGE_COUNT);
     const [entriesCount, setEntriesCount] = useState(0);
     const [ws] = useState(null);
     const [searchParams, setSearchParams] = useSearchParams();
@@ -51,8 +53,10 @@ const HomePage = () => {
     useEffect(() => {
         setSearchParams(params => {
             params.set("page", 1);
+            params.set("page_count", INITIAL_PAGE_COUNT);
             return params;
         });
+
         fetchData().catch(console.error);
         document.title = 'Appointments - Appointments';
         let ws = new WebSocket('ws://127.0.0.1:8000/ws/test/');
@@ -63,14 +67,14 @@ const HomePage = () => {
             console.log('e', message);
             fetchData();
         };
-        if (ws.readyState === 1) { // <-- This is important
+        if (ws.readyState === 1) {
             ws.close();
         }
     }, [ws]);
     
     useEffect(() => {
         fetchData().catch(console.error);
-    }, [searchParams])
+    }, [searchParams]);
 
     useEffect(() => {
         setSearchParams(params => {
@@ -114,7 +118,10 @@ const HomePage = () => {
                 handleClose={ handleCloseForm }
                 fetchData={ fetchData }
             />
-            <PaginationBar entriesCount={ entriesCount } pagesCount={ pageCount }/>
+            <PaginationBar 
+                entriesCount={ entriesCount } 
+                pagesCount={ pageCount }
+            />
         </div>
     )
 }

@@ -91,19 +91,39 @@ const EditCustomerForm = ({ customerId, handleClose, fetchData }) => {
                 <div className="form-group">
                     <div className="flex-row my-3">
                         <label className="mx-3" htmlFor="fullNameInput">Fullname</label>
-                        <input className="form-control" type="text" id="fullNameInput" value={fullname} onChange={changeFullName} placeholder="Enter fullname"/>
+                        <input className="form-control" 
+                            type="text" id="fullNameInput" 
+                            required
+                            value={fullname} 
+                            onChange={changeFullName} 
+                            placeholder="Enter fullname"/>
                     </div>
                     <div className="flex-row my-3">
                         <label className="mx-3" htmlFor="emailInput">Email</label>
-                        <input className="form-control" type="text" id="emailInput" value={email} onChange={changeEmail} placeholder="Enter email"/>
+                        <input className="form-control" 
+                            type="email" id="emailInput" 
+                            value={email} 
+                            required
+                            onChange={changeEmail} 
+                            placeholder="Enter email"/>
                     </div>
                     <div className="flex-row my-3">
                         <label className="mx-3" htmlFor="phoneInput">Phone</label>
-                        <input className="form-control" type="text" id="phoneInput" value={phone} onChange={changePhone} placeholder="Enter phone"/>
+                        <input className="form-control" 
+                            type="text" id="phoneInput" 
+                            value={phone}
+                            required 
+                            onChange={changePhone} 
+                            placeholder="Enter phone"/>
                     </div>                                        
                     <div className="flex-row my-3">
                         <label className="mx-3" htmlFor="addressInput">Address</label>
-                        <input className="form-control" type="text" id="addressInput" value={address} onChange={changeAddress} placeholder="Enter address"/>
+                        <input className="form-control" 
+                            type="text" id="addressInput" 
+                            required
+                            value={address} 
+                            onChange={changeAddress} 
+                            placeholder="Enter address"/>
                     </div>
                     <div className="d-flex justify-content-end">
                         <button type="submit" className="btn btn-primary">Submit</button>
